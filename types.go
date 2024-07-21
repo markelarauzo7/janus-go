@@ -31,6 +31,7 @@ var msgtypes = map[string]func() interface{}{
 	"hangup":      func() interface{} { return &HangupMsg{} },
 	"slowlink":    func() interface{} { return &SlowLinkMsg{} },
 	"timeout":     func() interface{} { return &TimeoutMsg{} },
+	"trickle":     func() interface{} { return &TrickleMsg{} },
 }
 
 type BaseMsg struct {
@@ -108,6 +109,16 @@ type WebRTCUpMsg struct {
 
 type TimeoutMsg struct {
 	Session uint64 `json:"session_id"`
+}
+
+type TrickleMsg struct {
+	Candidate struct {
+		Candidate     string  `json:"candidate"`
+		SDPMid        *string `json:"sdpMid"`
+		SDPMLineIndex *uint16 `json:"sdpMLineIndex"`
+		Completed     *bool   `json:"completed"`
+	} `json:"candidate"`
+	Handle uint64 `json:"handle_id"`
 }
 
 type SlowLinkMsg struct {
