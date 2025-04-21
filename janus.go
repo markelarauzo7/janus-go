@@ -53,7 +53,6 @@ func Connect(wsURL string) (*Gateway, error) {
 	websocket.DefaultDialer.Subprotocols = []string{"janus-protocol"}
 
 	conn, _, err := websocket.DefaultDialer.Dial(wsURL, nil)
-
 	if err != nil {
 		return nil, err
 	}
@@ -144,11 +143,9 @@ func (gateway *Gateway) ping() {
 }
 
 func (gateway *Gateway) sendloop() {
-
 }
 
 func (gateway *Gateway) recv() {
-
 	for {
 		// Read message from Gateway
 
@@ -220,7 +217,7 @@ func (gateway *Gateway) recv() {
 				handle := session.Handles[base.Handle]
 				session.Unlock()
 				if handle == nil {
-					fmt.Printf("Unable to deliver message. Handle gone?\n")
+					// fmt.Printf("Unable to deliver message. Handle gone?\n")
 					continue
 				}
 
@@ -394,7 +391,7 @@ type Handle struct {
 	// Type   // pub  or sub
 	Type string
 
-	//User   // Userid
+	// User   // Userid
 	User string
 
 	// Events is a receive only channel that can be used to receive events
@@ -461,9 +458,11 @@ GetMessage: // No tears..
 // a new PeerConnection with a plugin.
 // candidate should be a single ICE candidate, or a completed object to
 // signify that all candidates have been sent:
-//		{
-//			"completed": true
-//		}
+//
+//	{
+//		"completed": true
+//	}
+//
 // On success, an AckMsg will be returned and error will be nil.
 func (handle *Handle) Trickle(candidate interface{}) (*AckMsg, error) {
 	req, ch := newRequest("trickle")
